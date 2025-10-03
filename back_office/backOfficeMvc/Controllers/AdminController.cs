@@ -40,6 +40,10 @@ namespace backOfficeMvc.Controllers
             var adminId = Session["AdminId"];
             var adminLogin = Session["AdminLogin"];
 
+            if (adminId == null || adminLogin == null)
+            {
+                return RedirectToAction("Login");
+            }   
 
             return View();
         }

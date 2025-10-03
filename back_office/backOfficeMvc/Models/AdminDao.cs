@@ -30,10 +30,17 @@ namespace backOfficeMvc.Models
 
             while (sqlDataReader.Read())
             {
-                admin = new Admin(
-                    sqlDataReader.GetInt32(0),
-                    sqlDataReader.GetString(1)
-                );
+                if (sqlDataReader.GetString(3) == "administrateur")
+                {
+
+                    admin = new Admin(
+                        sqlDataReader.GetInt32(0),
+                        sqlDataReader.GetString(1)
+                    );
+                } else
+                {
+                    throw new Exception("L'utilisateur n'est pas un administrateur.");
+                }
             }
 
             sqlConnection.Close();
