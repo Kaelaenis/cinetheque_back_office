@@ -25,6 +25,13 @@ namespace backOfficeMvc.Models
             Password = password;
         }
 
+        // Constructor for basic admin details
+        public Admin(int id, string username)
+        {
+            Id = id;
+            Login = username;
+        }
+
         // Full constructor for complete admin details
         public Admin(int id, string username, string password, string nom, string prenom, string adresse)
         {

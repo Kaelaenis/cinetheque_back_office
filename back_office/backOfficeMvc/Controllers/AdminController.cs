@@ -1,4 +1,5 @@
-﻿using System;
+﻿using backOfficeMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,13 +15,32 @@ namespace backOfficeMvc.Controllers
             return View();
         }
 
-        //public ActionResult Login(string username, string password)
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public ActionResult Login(string login, string password)
+        {
+            AdminDao adminDao = new AdminDao();
+
+            Admin admin = adminDao.Login(login, password);
+
+            if (admin != null)
+            {
+                Session["AdminId"] = admin.Id;
+                Session["AdminLogin"] = admin.Login;
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Invalid username or password.";
+                return View();
+            }
+        }
 
         public ActionResult Dashboard()
         {
+            var adminId = Session["AdminId"];
+            var adminLogin = Session["AdminLogin"];
+
+
             return View();
         }
 
