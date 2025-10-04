@@ -1,4 +1,6 @@
-﻿using System;
+﻿using backOfficeMvc.DataAccess;
+using backOfficeMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,9 +9,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace backOfficeMvc.Models
+namespace backOfficeMvc.DataAccess
 {
-    public class AdminDao
+    public class AdminDao : IAdminDao
     {
         public Admin Login(string login, string password)
         {

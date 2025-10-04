@@ -1,4 +1,5 @@
-﻿using backOfficeMvc.Models;
+﻿using backOfficeMvc.DataAccess;
+using backOfficeMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,25 @@ namespace backOfficeMvc.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IArticleDao _articleDao;
+        private readonly IAdminDao _adminDao;
+        public AdminController(IAdminDao adminDao, IArticleDao articleDao)
+        {
+            _adminDao = adminDao;
+            _articleDao = articleDao;
+        }
+
         // Admin/login
         public ActionResult Login()
         {
             return View();
         }
 
+        // Admin/login
         [HttpPost]
         public ActionResult Login(string login, string password)
         {
-            AdminDao adminDao = new AdminDao();
-
-            Admin admin = adminDao.Login(login, password);
+            Admin admin = _adminDao.Login(login, password);
 
             if (admin != null)
             {
@@ -35,6 +43,7 @@ namespace backOfficeMvc.Controllers
             }
         }
 
+        // Admin/dashboard
         public ActionResult Dashboard()
         {
             var adminId = Session["AdminId"];
@@ -48,6 +57,7 @@ namespace backOfficeMvc.Controllers
             return View();
         }
 
+        // Admin/logout
         public ActionResult Logout()
         {
             return View();
