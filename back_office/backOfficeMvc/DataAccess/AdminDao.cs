@@ -1,4 +1,6 @@
-﻿using System;
+﻿using backOfficeMvc.DataAccess;
+using backOfficeMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,9 +9,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace backOfficeMvc.Models
+namespace backOfficeMvc.DataAccess
 {
-    public class AdminDao
+    public class AdminDao : IAdminDao
     {
         public Admin Login(string login, string password)
         {
@@ -30,10 +32,17 @@ namespace backOfficeMvc.Models
 
             while (sqlDataReader.Read())
             {
-                admin = new Admin(
-                    sqlDataReader.GetInt32(0),
-                    sqlDataReader.GetString(1)
-                );
+                if (sqlDataReader.GetString(3) == "administrateur")
+                {
+
+                    admin = new Admin(
+                        sqlDataReader.GetInt32(0),
+                        sqlDataReader.GetString(1)
+                    );
+                } else
+                {
+                    throw new Exception("L'utilisateur n'est pas un administrateur.");
+                }
             }
 
             sqlConnection.Close();
