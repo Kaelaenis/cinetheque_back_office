@@ -1,5 +1,6 @@
 ﻿using backOfficeMvc.DataAccess;
 using backOfficeMvc.Models;
+using backOfficeMvc.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,9 +53,24 @@ namespace backOfficeMvc.Controllers
             if (adminId == null || adminLogin == null)
             {
                 return RedirectToAction("Login");
-            }   
+            }
+            
+            var articles = _articleDao.GetAllArticles();
 
-            return View();
+            //var vm = new ArticleListViewModel
+            //{
+            //    Articles = articles.Select(a => new ArticleViewModel(a)).ToList()
+            //};
+
+            var chartData = articles
+               .GroupBy(a => a.Categorie)
+               .Select(g => new ChartCategoryViewModel { 
+                   Category = g.Key, 
+                   Count = g.Count() 
+               })
+               .ToList();
+
+            return View(chartData);
         }
 
         // Admin/logout

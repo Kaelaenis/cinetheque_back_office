@@ -143,6 +143,11 @@
     </Compile>
     <Compile Include="Models\Admin.cs" />
     <Compile Include="DataAccess\AdminDao.cs" />
+    <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\ViewModels\ArticleListViewModel.cs" />
+    <Compile Include="Models\ViewModels\ArticleViewModel.cs" />
+    <Compile Include="Models\ViewModels\ChartCategoryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,74 @@
-﻿
-@{
-    ViewBag.Title = "Dashboard";
+﻿@*@model backOfficeMvc.Models.ViewModels.ArticleListViewModel
+    @{
+        ViewBag.Title = "Dashboard";
+    }
+
+    <h2>Dashboard</h2>
+
+    <p>Welcome to the admin dashboard!</p>
+
+    <p>Admin ID : @Session["AdminId"]</p>
+    <p>Admin Login : @Session["AdminLogin"]</p>
+
+    <h2>Liste des articles</h2>
+
+    <table class="table-bordered">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Catégorie</th>
+                <th>Description</th>
+                <th>Quantité totale</th>
+                <th>Quantité disponible</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model.Articles)
+            {
+                <tr>
+                    <td>@article.Nom</td>
+                    <td>@article.Prix €</td>
+                    <td>@article.CategorieNom</td>
+                    <td>@article.Description</td>
+                    <td>@article.QteTotal</td>
+                    <td>@article.QteDispo</td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+@model List<backOfficeMvc.Models.ViewModels.ChartCategoryViewModel>
+
+@{ 
+    Response.ContentEncoding = System.Text.Encoding.UTF8;
 }
 
-<h2>Dashboard</h2>
+<h2>Nombre d'articles par catégorie</h2>
 
-<p>Welcome to the admin dashboard!</p>
+<div id="chart_div" style="width: 800px; height: 500px;"></div>
 
-<p>Admin ID : @Session["AdminId"]</p>
-<p>Admin Login : @Session["AdminLogin"]</p>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var chartData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+
+        var dataArray = [['Catégorie', 'Nombre d\'articles']];
+        chartData.forEach(function(item){
+            dataArray.push([item.Category, item.Count]);
+        });
+
+        var data = google.visualization.arrayToDataTable(dataArray);
+
+        var options = {
+            title: 'Nombre d\'articles par catégorie',
+            pieHole: 0.4
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
