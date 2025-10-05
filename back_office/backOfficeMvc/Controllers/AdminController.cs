@@ -44,7 +44,6 @@ namespace backOfficeMvc.Controllers
             }
         }
 
-        // Admin/dashboard
         public ActionResult Dashboard()
         {
             var adminId = Session["AdminId"];
@@ -54,24 +53,51 @@ namespace backOfficeMvc.Controllers
             {
                 return RedirectToAction("Login");
             }
-            
-            var articles = _articleDao.GetAllArticles();
 
-            //var vm = new ArticleListViewModel
-            //{
-            //    Articles = articles.Select(a => new ArticleViewModel(a)).ToList()
-            //};
+            var articles = _articleDao.GetAllArticles();
 
             var chartData = articles
                .GroupBy(a => a.Categorie)
-               .Select(g => new ChartCategoryViewModel { 
-                   Category = g.Key, 
-                   Count = g.Count() 
+               .Select(g => new ChartCategoryViewModel
+               {
+                   Category = g.Key,
+                   Count = g.Count()
                })
                .ToList();
 
-            return View(chartData);
+            // (Optionnel) pour peupler ton <select>
+            ViewBag.Categories = _articleDao.SelectAllCategories();
+
+            return View(chartData); // => ton modèle principal
         }
+
+
+        [HttpPost]
+        public ActionResult Dashboard(string categoryFilter)
+        {
+            var adminId = Session["AdminId"];
+            var adminLogin = Session["AdminLogin"];
+
+            if (adminId == null || adminLogin == null)
+            {
+                return Json(new { success = false, message = "Session expirée" });
+            }
+
+            // Récupère les articles de la catégorie choisie
+            var articles = _articleDao.GetArticlesByCategory(categoryFilter);
+
+            // Construit la liste des articles pour le graphique filtré
+            var chartData = articles
+               .Select(a => new ChartArticleViewModel
+               {
+                   Name = a.Nom,
+                   QteTotale = a.QteTotal
+               })
+               .ToList();
+
+            return Json(new { success = true, data = chartData });
+        }
+
 
         // Admin/logout
         public ActionResult Logout()

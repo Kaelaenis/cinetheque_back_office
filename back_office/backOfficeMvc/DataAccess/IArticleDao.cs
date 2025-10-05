@@ -10,5 +10,9 @@ namespace backOfficeMvc.DataAccess
     public interface IArticleDao
     {
         List<Article> GetAllArticles();
+
+        List<Category> SelectAllCategories();
+
+        List<Article> GetArticlesByCategory(string category);
     }
 }

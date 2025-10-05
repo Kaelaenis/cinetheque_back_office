@@ -1,59 +1,29 @@
-﻿@*@model backOfficeMvc.Models.ViewModels.ArticleListViewModel
-    @{
-        ViewBag.Title = "Dashboard";
-    }
+﻿@model List<backOfficeMvc.Models.ViewModels.ChartCategoryViewModel>
 
-    <h2>Dashboard</h2>
-
-    <p>Welcome to the admin dashboard!</p>
-
-    <p>Admin ID : @Session["AdminId"]</p>
-    <p>Admin Login : @Session["AdminLogin"]</p>
-
-    <h2>Liste des articles</h2>
-
-    <table class="table-bordered">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Catégorie</th>
-                <th>Description</th>
-                <th>Quantité totale</th>
-                <th>Quantité disponible</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var article in Model.Articles)
-            {
-                <tr>
-                    <td>@article.Nom</td>
-                    <td>@article.Prix €</td>
-                    <td>@article.CategorieNom</td>
-                    <td>@article.Description</td>
-                    <td>@article.QteTotal</td>
-                    <td>@article.QteDispo</td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
-
-@model List<backOfficeMvc.Models.ViewModels.ChartCategoryViewModel>
-
-@{ 
+@{
     Response.ContentEncoding = System.Text.Encoding.UTF8;
 }
 
-<h2>Nombre d'articles par catégorie</h2>
+<form id="filterForm" method="post" action="/Admin/Dashboard">
+    <select id="categoryFilter" name="categoryFilter">
+        <option value="">-- Toutes les catégories --</option>
+        @foreach (var cat in ViewBag.Categories)
+        {
+            <option value="@cat">@cat</option>
+        }
+    </select>
+</form>
 
-<div id="chart_div" style="width: 800px; height: 500px;"></div>
+<div id="chart_div" style="height:500px;"></div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
+@section Scripts {
+
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
     google.charts.load('current', { packages: ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawGlobalChart);
 
-    function drawChart() {
+    function drawGlobalChart() {
         var chartData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
 
         var dataArray = [['Catégorie', 'Nombre d\'articles']];
@@ -62,13 +32,46 @@
         });
 
         var data = google.visualization.arrayToDataTable(dataArray);
+        const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, { title: 'Répartition des articles par catégorie' });
+    }
 
-        var options = {
-            title: 'Nombre d\'articles par catégorie',
-            pieHole: 0.4
+    document.getElementById('categoryFilter').addEventListener('change', function () {
+        const selected = this.value;
+
+        if (!selected) {
+            drawGlobalChart();
+            return;
+        }
+
+        fetch('/Admin/Dashboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'categoryFilter=' + encodeURIComponent(selected)
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) drawFilteredChart(json.data, selected);
+            else alert(json.message);
+        });
+    });
+
+    function drawFilteredChart(data, category) {
+        const dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('string', 'Article');
+        dataTable.addColumn('number', 'Quantité');
+
+        data.forEach(a => dataTable.addRow([a.Name, a.QteTotale]));
+
+        const options = {
+            title: 'Articles de la catégorie : ' + category,
+            pieHole: 0.4, // option pour un "donut chart", facultatif
+            legend: { position: 'right' }
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
+        // Utilisation de PieChart au lieu de ColumnChart
+        const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(dataTable, options);
     }
-</script>
+    </script>
+}

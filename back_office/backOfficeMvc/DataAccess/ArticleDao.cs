@@ -41,5 +41,50 @@ namespace backOfficeMvc.DataAccess
             sqlConnection.Close();
             return articles;
         }
+
+        public List<Category> SelectAllCategories()
+        {
+            List<Category> categories = new List<Category>();
+            string connStr = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            SqlConnection sqlConnection = new SqlConnection(connStr);
+            SqlCommand sqlCommand = new SqlCommand("SELECT * FROM categories", sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Category category = new Category(
+                    sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("id")),
+                    sqlDataReader.GetString(sqlDataReader.GetOrdinal("categorie"))
+                );
+                categories.Add(category);
+            }
+            sqlConnection.Close();
+            return categories;
+        }
+
+        public List<Article> GetArticlesByCategory(string category)
+        {
+            List<Article> articles = new List<Article>();
+            string connStr = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            SqlConnection sqlConnection = new SqlConnection(connStr);
+            SqlCommand sqlCommand = new SqlCommand("SELECT a.*, c.categorie AS category_name FROM articles a INNER JOIN categories c on a.categorie_id = c.id WHERE c.categorie = @category", sqlConnection);
+            sqlCommand.Parameters.AddWithValue("@category", category);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Article article = new Article(
+                    sqlDataReader.GetString(sqlDataReader.GetOrdinal("nom")),
+                    sqlDataReader.GetDouble(sqlDataReader.GetOrdinal("prix")),
+                    sqlDataReader.GetString(sqlDataReader.GetOrdinal("category_name")),
+                    sqlDataReader.GetString(sqlDataReader.GetOrdinal("description")),
+                    sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("qte_totale")),
+                    sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("qte_dispo"))
+                );
+                articles.Add(article);
+            }
+            sqlConnection.Close();
+            return articles;
+        }
     }
 }

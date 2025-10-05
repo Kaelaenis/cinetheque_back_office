@@ -10,7 +10,8 @@ namespace backOfficeMvc.Models
         public int Id { get; set; }
         public string Nom { get; set; }
 
-        public Category(string nom) {
+        public Category(int id, string nom) {
+            Id = id;
             Nom = nom;
         }
 
