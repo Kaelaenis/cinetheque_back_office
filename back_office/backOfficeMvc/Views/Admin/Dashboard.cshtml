@@ -1,11 +1,77 @@
-﻿
+﻿@model List<backOfficeMvc.Models.ViewModels.ChartCategoryViewModel>
+
 @{
-    ViewBag.Title = "Dashboard";
+    Response.ContentEncoding = System.Text.Encoding.UTF8;
 }
 
-<h2>Dashboard</h2>
+<form id="filterForm" method="post" action="/Admin/Dashboard">
+    <select id="categoryFilter" name="categoryFilter">
+        <option value="">-- Toutes les catégories --</option>
+        @foreach (var cat in ViewBag.Categories)
+        {
+            <option value="@cat">@cat</option>
+        }
+    </select>
+</form>
 
-<p>Welcome to the admin dashboard!</p>
+<div id="chart_div" style="height:500px;"></div>
 
-<p>Admin ID : @Session["AdminId"]</p>
-<p>Admin Login : @Session["AdminLogin"]</p>
+@section Scripts {
+
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawGlobalChart);
+
+    function drawGlobalChart() {
+        var chartData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+
+        var dataArray = [['Catégorie', 'Nombre d\'articles']];
+        chartData.forEach(function(item){
+            dataArray.push([item.Category, item.Count]);
+        });
+
+        var data = google.visualization.arrayToDataTable(dataArray);
+        const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, { title: 'Répartition des articles par catégorie' });
+    }
+
+    document.getElementById('categoryFilter').addEventListener('change', function () {
+        const selected = this.value;
+
+        if (!selected) {
+            drawGlobalChart();
+            return;
+        }
+
+        fetch('/Admin/Dashboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'categoryFilter=' + encodeURIComponent(selected)
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) drawFilteredChart(json.data, selected);
+            else alert(json.message);
+        });
+    });
+
+    function drawFilteredChart(data, category) {
+        const dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('string', 'Article');
+        dataTable.addColumn('number', 'Quantité');
+
+        data.forEach(a => dataTable.addRow([a.Name, a.QteTotale]));
+
+        const options = {
+            title: 'Articles de la catégorie : ' + category,
+            pieHole: 0.4, // option pour un "donut chart", facultatif
+            legend: { position: 'right' }
+        };
+
+        // Utilisation de PieChart au lieu de ColumnChart
+        const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(dataTable, options);
+    }
+    </script>
+}

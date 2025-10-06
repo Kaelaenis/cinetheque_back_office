@@ -134,6 +134,7 @@
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataAccess\ArticleDao.cs" />
     <Compile Include="DataAccess\IAdminDao.cs" />
@@ -143,6 +144,13 @@
     </Compile>
     <Compile Include="Models\Admin.cs" />
     <Compile Include="DataAccess\AdminDao.cs" />
+    <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\ViewModels\ArticleListViewModel.cs" />
+    <Compile Include="Models\ViewModels\ArticleViewModel.cs" />
+    <Compile Include="Models\ViewModels\ChartArticleViewModel.cs" />
+    <Compile Include="Models\ViewModels\ChartCategoryViewModel.cs" />
+    <Compile Include="Models\ViewModels\ChartViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +193,9 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Admin\Logout.cshtml" />
+    <Content Include="Views\Article\List.cshtml" />
+    <Content Include="Views\Article\Edit.cshtml" />
+    <Content Include="Views\Article\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
