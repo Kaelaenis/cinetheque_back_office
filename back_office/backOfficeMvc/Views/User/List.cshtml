@@ -1,0 +1,39 @@
+﻿@model backOfficeMvc.Models.ViewModels.UserListViewModel
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Login</th>
+            <th>Mdp</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Adresse</th>
+            <th>Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Login</td>
+                <td>@user.Mdp</td>
+                <td>@user.Nom</td>
+                <td>@user.Prenom</td>
+                <td>@user.Adresse</td>
+                <td>@user.Role</td>
+                <td><a href="@user.Id/Edit">Edit</a></td>
+                <td><a href="@user.Id/Delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button><a href="/User/Create">Créer un nouvel utilisateur</a></button>
