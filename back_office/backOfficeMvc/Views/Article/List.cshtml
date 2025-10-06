@@ -1,0 +1,33 @@
+﻿@model backOfficeMvc.Models.ViewModels.ArticleListViewModel
+<h2>Liste des articles</h2>
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Catégorie</th>
+            <th>Description</th>
+            <th>Quantité totale</th>
+            <th>Quantité disponible</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var article in Model.Articles)
+        {
+            <tr>
+                <td>@article.Nom</td>
+                <td>@article.Prix €</td>
+                <td>@article.CategorieNom</td>
+                <td>@article.Description</td>
+                <td>@article.QteTotal</td>
+                <td>@article.QteDispo</td>
+                <td><a href="@article.Id/Edit">Modifier</a></td>
+                <td><a href="@article.Id/Delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button><a href="/Article/Create">Ajouter un nouvel article</a></button>

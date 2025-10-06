@@ -15,8 +15,9 @@ namespace backOfficeMvc.Models
         public int QteTotal { get; set; }
         public int QteDispo { get; set; }
 
-        public Article(string nom, double prix, string categorie, string description, int qteTotal, int qteDispo)
+        public Article(int id, string nom, double prix, string categorie, string description, int qteTotal, int qteDispo)
         {
+            Id = id;
             Nom = nom;
             Prix = prix;
             Categorie = categorie;
@@ -24,6 +25,8 @@ namespace backOfficeMvc.Models
             QteTotal = qteTotal;
             QteDispo = qteDispo;
         }
+
+        public Article() { }
 
         public override string ToString()
         {

@@ -14,5 +14,13 @@ namespace backOfficeMvc.DataAccess
         List<Category> SelectAllCategories();
 
         List<Article> GetArticlesByCategory(string category);
+
+        Article GetArticleById(int id);
+
+        void AddArticle(Article article);
+
+        void UpdateArticle(int id, Article article);
+
+        void DeleteArticle(int id);
     }
 }

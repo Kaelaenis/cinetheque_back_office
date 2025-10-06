@@ -7,6 +7,7 @@ namespace backOfficeMvc.Models.ViewModels
 {
     public class ArticleViewModel
     {
+        public int Id { get; set; }
         public string Nom { get; set; }
         public double Prix { get; set; }
         public string CategorieNom { get; set; }
@@ -17,6 +18,7 @@ namespace backOfficeMvc.Models.ViewModels
         // Constructeur pour transformer un Article en ViewModel
         public ArticleViewModel(Article article)
         {
+            Id = article.Id;
             Nom = article.Nom;
             Prix = article.Prix;
             CategorieNom = article.Categorie; // null-safe
@@ -24,5 +26,8 @@ namespace backOfficeMvc.Models.ViewModels
             QteTotal = article.QteTotal;
             QteDispo = article.QteDispo;
         }
+
+        // Constructeur par défaut
+        public ArticleViewModel() { }
     }
 }
