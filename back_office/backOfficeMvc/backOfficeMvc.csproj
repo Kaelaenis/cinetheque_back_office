@@ -135,11 +135,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\CommandeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\ArticleDao.cs" />
+    <Compile Include="DataAccess\CommandeDao.cs" />
     <Compile Include="DataAccess\IAdminDao.cs" />
     <Compile Include="DataAccess\IArticleDao.cs" />
+    <Compile Include="DataAccess\ICommandeDao.cs" />
     <Compile Include="DataAccess\IUserDao.cs" />
     <Compile Include="DataAccess\UserDao.cs" />
     <Compile Include="Global.asax.cs">
@@ -149,12 +152,15 @@
     <Compile Include="DataAccess\AdminDao.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Commande.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ViewModels\ArticleListViewModel.cs" />
     <Compile Include="Models\ViewModels\ArticleViewModel.cs" />
     <Compile Include="Models\ViewModels\ChartArticleViewModel.cs" />
     <Compile Include="Models\ViewModels\ChartCategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\ChartViewModel.cs" />
+    <Compile Include="Models\ViewModels\CommandeListViewModel.cs" />
+    <Compile Include="Models\ViewModels\CommandeViewModel.cs" />
     <Compile Include="Models\ViewModels\UserListViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -205,6 +211,9 @@
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Commande\List.cshtml" />
+    <Content Include="Views\Commande\Create.cshtml" />
+    <Content Include="Views\Commande\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

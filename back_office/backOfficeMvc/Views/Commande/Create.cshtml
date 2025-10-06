@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Commande", FormMethod.Post))
+{
+    <form>
+        <div>
+            <label for="Client_id">Client ID</label>
+            <select id="Client_id" name="Client_id">
+                @foreach (var user in ViewBag.Clients)
+                {
+                    <option value="@user.Id">@user.Id - @user.Nom @user.Prenom</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label for="Article_id">Article ID</label>
+            <select id="Article_id" name="Article_id">
+                @foreach (var article in ViewBag.Articles)
+                {
+                    <option value="@article.Id">@article.Id - @article.Nom</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label for="Qte_articles">Quantité d'articles</label>
+            <input type="number" id="Qte_articles" name="Qte_articles" required />
+        </div>
+        <div>
+            <label for="DateDebut">Date de début</label>
+            <input type="date" id="DateDebut" name="DateDebut" required />
+        </div>
+        <div>
+            <label for="DateFin">Date de fin</label>
+            <input type="date" id="DateFin" name="DateFin" required />
+        </div>
+
+
+        <button type="submit">Enregistrer</button>
+    </form>
+}
