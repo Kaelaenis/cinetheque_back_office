@@ -33,6 +33,7 @@ namespace backOfficeMvc.App_Start
             // Liaisons interface -> implémentation
             _kernel.Bind<IAdminDao>().To<AdminDao>();
             _kernel.Bind<IArticleDao>().To<ArticleDao>();
+            _kernel.Bind<IUserDao>().To<UserDao>();
             // Ajouter d'autres DAO ou services ici
         }
     }

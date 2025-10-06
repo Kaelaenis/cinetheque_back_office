@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "User", FormMethod.Post))
+{
+    <form>
+        <div>
+            <label for="Login">Login</label>
+            <input type="text" name="Login" value="" />
+        </div>
+        <div>
+            <label for="Mdp">Mdp</label>
+            <input type="text" name="Mdp" value="" />
+        </div>
+        <div>
+            <label for="Nom">Nom</label>
+            <input type="text" name="Nom" value="" />
+        </div>
+        <div>
+            <label for="Prenom">Prenom</label>
+            <input type="text" name="Prenom" value="" />
+        </div>
+        <div>
+            <label for="Adresse">Adresse</label>
+            <input type="text" name="Adresse" value="" />
+        </div>
+        <div>
+            <label for="Role">Role</label>
+            <input type="text" name="Role" value="" />
+        </div>
+
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+}
+
