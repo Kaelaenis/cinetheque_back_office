@@ -1,41 +1,54 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card content shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4 text-secondary fw-semibold">Modifier l'utilisateur</h2>
 
-@using (Html.BeginForm("Create", "User", FormMethod.Post))
-{
-    <form>
-        <div>
-            <label for="Login">Login</label>
-            <input type="text" name="Login" value="" />
-        </div>
-        <div>
-            <label for="Mdp">Mdp</label>
-            <input type="text" name="Mdp" value="" />
-        </div>
-        <div>
-            <label for="Nom">Nom</label>
-            <input type="text" name="Nom" value="" />
-        </div>
-        <div>
-            <label for="Prenom">Prenom</label>
-            <input type="text" name="Prenom" value="" />
-        </div>
-        <div>
-            <label for="Adresse">Adresse</label>
-            <input type="text" name="Adresse" value="" />
-        </div>
-        <div>
-            <label for="Role">Role</label>
-            <input type="text" name="Role" value="" />
-        </div>
+                    @using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "d-flex flex-column align-items-center" }))
+                    {
+                        <div class="mb-3">
+                            <label for="Login" class="form-label fw-medium">Login</label>
+                            <input type="text" name="Login" id="Login" class="form-control" placeholder="Entrer le login" required />
+                        </div>
 
-        <div>
-            <button type="submit">Create</button>
-        </div>
-    </form>
-}
+                        <div class="mb-3">
+                            <label for="Mdp" class="form-label fw-medium">Mot de passe</label>
+                            <input type="password" name="Mdp" id="Mdp" class="form-control" placeholder="Entrer le mot de passe" required />
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="Nom" class="form-label fw-medium">Nom</label>
+                            <input type="text" name="Nom" id="Nom" class="form-control" placeholder="Entrer le nom" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Prenom" class="form-label fw-medium">Prénom</label>
+                            <input type="text" name="Prenom" id="Prenom" class="form-control" placeholder="Entrer le prénom" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Adresse" class="form-label fw-medium">Adresse</label>
+                            <input type="text" name="Adresse" id="Adresse" class="form-control" placeholder="Entrer l’adresse" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="Role" class="form-label fw-medium">Rôle</label>
+                            <input type="text" name="Role" id="Role" class="form-control" placeholder="Entrer le rôle" />
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-secondary btn-lg rounded-pill">
+                                <i class="bi bi-check-circle me-2"></i> Créer
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
