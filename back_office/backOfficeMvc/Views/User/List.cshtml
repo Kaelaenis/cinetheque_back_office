@@ -3,37 +3,39 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>Liste des utilisateurs</h2>
 
-<table class="table-bordered">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Login</th>
-            <th>Mdp</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Adresse</th>
-            <th>Role</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th scope="col">#</th>
+            <th scope="col">Login</th>
+            <th scope="col">Mdp</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Role</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model.Users)
         {
             <tr>
-                <td>@user.Id</td>
+                <td scope="row">@user.Id</td>
                 <td>@user.Login</td>
                 <td>@user.Mdp</td>
                 <td>@user.Nom</td>
                 <td>@user.Prenom</td>
                 <td>@user.Adresse</td>
                 <td>@user.Role</td>
-                <td><a href="@user.Id/Edit">Edit</a></td>
-                <td><a href="@user.Id/Delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Delete</a></td>
+                <td><a href="@user.Id/Edit">Modifier</a></td>
+                <td><a href="@user.Id/Delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a></td>
             </tr>
         }
     </tbody>
 </table>
-<button><a href="/User/Create">Créer un nouvel utilisateur</a></button>
+<form action="Create">
+    <button class="btn btn-secondary" type="submit">Créer un nouvel utilisateur</button>
+</form>
