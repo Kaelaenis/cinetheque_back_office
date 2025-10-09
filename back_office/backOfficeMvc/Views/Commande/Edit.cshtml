@@ -17,7 +17,7 @@
                                 <select id="Client_id" name="Client_id" class="form-select text-center w-100">
                                     @foreach (var user in ViewBag.Clients)
                                     {
-                                        <option value="@user.Id">@user.Id - @user.Nom @user.Prenom</option>
+                                        <option value="@user.Id" @(user.Id == Model.Client_id ? "selected" : "")>@user.Id - @user.Nom @user.Prenom</option>
                                     }
                                 </select>
                             </div>
@@ -27,7 +27,7 @@
                                 <select id="Article_id" name="Article_id" class="form-select text-center w-100">
                                     @foreach (var article in ViewBag.Articles)
                                     {
-                                        <option value="@article.Id">@article.Id - @article.Nom</option>
+                                        <option value="@article.Id" @(article.Id == Model.Article_id ? "selected" : "")>@article.Id - @article.Nom</option>
                                     }
                                 </select>
                             </div>

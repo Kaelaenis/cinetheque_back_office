@@ -26,8 +26,8 @@
                 <td scope="row">@commande.Id</td>
                 <td>@commande.Prix_total €</td>
                 <td>@commande.Qte_articles</td>
-                <td>@commande.DateDebut</td>
-                <td>@commande.DateFin</td>
+                <td>@commande.DateDebut.ToString("dd/MM/yyyy")</td>
+                <td>@commande.DateFin.ToString("dd/MM/yyyy")</td>
                 <td>@commande.Article_id</td>
                 <td>@commande.Client_id</td>
                 <td><a href="@commande.Id/Edit">Modifier</a></td>

@@ -35,7 +35,7 @@ namespace backOfficeMvc.Controllers
             {
                 Session["AdminId"] = admin.Id;
                 Session["AdminLogin"] = admin.Login;
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
