@@ -75,6 +75,8 @@ namespace backOfficeMvc.Controllers
         [Route("Commande/{id}/Edit")]
         public ActionResult Edit(int id)
         {
+            ViewBag.Articles = _articleDao.GetAllArticles();
+            ViewBag.Clients = _userDao.GetAllUsers();
             Commande commande = _commandeDao.GetCommande(id);
             if (commande == null)
             {

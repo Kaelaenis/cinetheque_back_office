@@ -1,7 +1,61 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4 text-secondary fw-semibold">Créer une commande</h2>
 
+                    @using (Html.BeginForm("Edit", "Commande", FormMethod.Post))
+                    {
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Client_id" class="form-label fw-medium">Client</label>
+                                <select id="Client_id" name="Client_id" class="form-select text-center w-100">
+                                    @foreach (var user in ViewBag.Clients)
+                                    {
+                                        <option value="@user.Id">@user.Id - @user.Nom @user.Prenom</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Article_id" class="form-label fw-medium">Article</label>
+                                <select id="Article_id" name="Article_id" class="form-select text-center w-100">
+                                    @foreach (var article in ViewBag.Articles)
+                                    {
+                                        <option value="@article.Id">@article.Id - @article.Nom</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Qte_articles" class="form-label fw-medium">Quantité d'articles</label>
+                                <input type="number" value="@Model.Qte_articles" id="Qte_articles" name="Qte_articles" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="DateDebut" class="form-label fw-medium">Date de début</label>
+                                <input type="date" id="DateDebut" value="@Model.DateDebut.ToString("yyyy-MM-dd")" name="DateDebut" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="DateFin" class="form-label fw-medium">Date de fin</label>
+                                <input type="date" id="DateFin" value="@Model.DateFin.ToString("yyyy-MM-dd")" name="DateFin" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <button type="submit" class="btn btn-secondary btn-lg rounded-pill w-100">
+                                    <i class="bi bi-check-circle me-2"></i> Créer
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
