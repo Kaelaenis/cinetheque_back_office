@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Liste des commandes</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Total</th>
+            <th scope="col">Quantité d'articles</th>
+            <th scope="col">Date de début</th>
+            <th scope="col">Date de fin</th>
+            <th scope="col">Article ID</th>
+            <th scope="col">Client ID</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var commande in Model.Commandes)
+        {
+            <tr>
+                <td scope="row">@commande.Id</td>
+                <td>@commande.Prix_total €</td>
+                <td>@commande.Qte_articles</td>
+                <td>@commande.DateDebut</td>
+                <td>@commande.DateFin</td>
+                <td>@commande.Article_id</td>
+                <td>@commande.Client_id</td>
+                <td><a href="@commande.Id/Edit">Modifier</a></td>
+                <td><a href="@commande.Id/Delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">Supprimer</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<form action="Create">
+    <button class="btn btn-secondary" type="submit">Créer une nouvelle commande</button>
+</form>
