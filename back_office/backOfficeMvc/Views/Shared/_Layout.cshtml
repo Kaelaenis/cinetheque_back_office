@@ -34,6 +34,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">Dashboard</a>
                     </li>
+                    @if (Session["AdminId"] != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "Admin")">Déconnexion</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Admin")">Connexion</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

@@ -102,7 +102,8 @@ namespace backOfficeMvc.Controllers
         // Admin/logout
         public ActionResult Logout()
         {
-            return View();
+            Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }

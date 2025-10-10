@@ -3,10 +3,21 @@
 }
 
 <div class="container">
-    <div class="row">
-        <h1>Bienvenue sur le Back-Office de votre application Cinéthèque !</h1>
-    </div>
-    <div class="row">
-        <img src="#" alt="img_index" />
+    <div class="align-items-center d-flex flex-column">
+        <div class="row">
+            <h1 class="text-center">Bienvenue sur le Back-Office de votre application Cinéthèque !</h1>
+            <p class="text-center">Au travers de cette interface vous pouvez gérer vos utilisateurs, vos stocks et vos commandes.</p>
+            <p class="text-center">N'hésitez pas à vous amuser avec l'affichage des données sur le site !</p>
+        </div>
+        @if (Session["AdminId"] == null)
+        {
+                <form action="/Admin/Login">
+                    <button type="submit" class="btn btn-secondary">Se connecter à l'application</button>
+                </form>
+        }
+
+        <div class="row w-50 mt-4">
+            <img src="@Url.Content("~/Content/images/index.png")" alt="img_index" />
+        </div>
     </div>
 </div>
