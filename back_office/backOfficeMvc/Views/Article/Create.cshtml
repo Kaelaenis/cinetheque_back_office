@@ -1,43 +1,63 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4 text-secondary fw-semibold">Créer un article</h2>
 
-@using (Html.BeginForm("Create", "Article", FormMethod.Post))
-{
-    <form>
-        <div>
-            <label for="Nom">Nom:</label>
-            <input type="text" id="Nom" name="Nom" required />
-        </div>
-        <div>
-            <label for="Prix">Prix (€):</label>
-            <input type="number" id="Prix" name="Prix" step="0.01" required />
-        </div>
-        <div>
-            <label for="CategorieNom">Catégorie:</label>
-            <select id="CategorieNom" name="CategorieNom" required>
-                @foreach (var cat in ViewBag.Categories)
-                {
-                    <option value="@cat">@cat</option>
-                }
-            </select>
-        </div>
-        <div>
-            <label for="Description">Description:</label>
-            <textarea id="Description" name="Description" required></textarea>
-        </div>
-        <div>
-            <label for="QteTotal">Quantité totale:</label>
-            <input type="number" id="QteTotal" name="QteTotal" required />
-        </div>
-        <div>
-            <label for="QteDispo">Quantité disponible:</label>
-            <input type="number" id="QteDispo" name="QteDispo" required />
-        </div>
+                    @using (Html.BeginForm("Create", "Article", FormMethod.Post))
+                    {
+                        <div class="d-flex flex-column align-items-center">
 
-        <button type="submit">Enregistrer</button>
-    </form>
-}
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Nom" class="form-label fw-medium">Nom</label>
+                                <input type="text" id="Nom" name="Nom" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Prix" class="form-label fw-medium">Prix (€)</label>
+                                <input type="number" id="Prix" name="Prix" step="0.01" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="CategorieNom" class="form-label fw-medium">Catégorie</label>
+                                <select id="CategorieNom" name="CategorieNom" class="form-select text-center" required>
+                                    @foreach (var cat in ViewBag.Categories)
+                                    {
+                                        <option value="@cat">@cat</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Description" class="form-label fw-medium">Description</label>
+                                <textarea id="Description" name="Description" class="form-control text-center" rows="3" required></textarea>
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="QteTotal" class="form-label fw-medium">Quantité totale</label>
+                                <input type="number" id="QteTotal" name="QteTotal" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="QteDispo" class="form-label fw-medium">Quantité disponible</label>
+                                <input type="number" id="QteDispo" name="QteDispo" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <button type="submit" class="btn btn-secondary btn-lg rounded-pill w-100">
+                                    <i class="bi bi-check-circle me-2"></i> Créer
+                                </button>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

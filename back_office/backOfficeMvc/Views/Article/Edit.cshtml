@@ -3,42 +3,63 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
 
-@using (Html.BeginForm("Edit", "Article", FormMethod.Post))
-{
-    <form>
-        <input type="hidden" name="Id" value="@Model.Id" />
-        <div>
-            <label for="Nom">Nom:</label>
-            <input type="text" id="Nom" name="Nom" value="@Model.Nom" required />
-        </div>
-        <div>
-            <label for="Prix">Prix (€):</label>
-            <input type="number" id="Prix" name="Prix" step="0.01" value="@Model.Prix" required />
-        </div>
-        <div>
-            <label for="CategorieNom">Catégorie:</label>
-            <select id="CategorieNom" name="CategorieNom" required>
-                @foreach (var cat in ViewBag.Categories)
-                {
-                    <option value="@cat">@cat</option>
-                }
-            </select>
-        </div>
-        <div>
-            <label for="Description">Description:</label>
-            <textarea id="Description" name="Description" required>@Model.Description</textarea>
-        </div>
-        <div>
-            <label for="QteTotal">Quantité totale:</label>
-            <input type="number" id="QteTotal" name="QteTotal" value="@Model.QteTotal" required />
-        </div>
-        <div>
-            <label for="QteDispo">Quantité disponible:</label>
-            <input type="number" id="QteDispo" name="QteDispo" value="@Model.QteDispo" required />
-        </div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4 text-secondary fw-semibold">Modifier l'article</h2>
 
-        <button type="submit">Enregistrer</button>
-    </form>
-}
+                    @using (Html.BeginForm("Edit", "Article", FormMethod.Post))
+                    {
+                        <div class="d-flex flex-column align-items-center">
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Nom" class="form-label fw-medium">Nom</label>
+                                <input type="text" id="Nom" value="@Model.Nom" name="Nom" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Prix" class="form-label fw-medium">Prix (€)</label>
+                                <input type="number" id="Prix" value="@Model.Prix" name="Prix" step="0.01" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="CategorieNom" class="form-label fw-medium">Catégorie</label>
+                                <select id="CategorieNom" name="CategorieNom" class="form-select text-center" required>
+                                    @foreach (var cat in ViewBag.Categories)
+                                    {
+                                        <option value="@cat" @(cat.Nom == Model.CategorieNom ? "selected" : "")>@cat</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="Description" class="form-label fw-medium">Description</label>
+                                <textarea id="Description" value="@Model.Description" name="Description" class="form-control text-center" rows="3" required></textarea>
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="QteTotal" class="form-label fw-medium">Quantité totale</label>
+                                <input type="number" id="QteTotal" value="@Model.QteTotal" name="QteTotal" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <label for="QteDispo" class="form-label fw-medium">Quantité disponible</label>
+                                <input type="number" id="QteDispo" value="@Model.QteDispo" name="QteDispo" class="form-control text-center" required />
+                            </div>
+
+                            <div class="mb-3" style="width: 300px;">
+                                <button type="submit" class="btn btn-secondary btn-lg rounded-pill w-100">
+                                    <i class="bi bi-check-circle me-2"></i> Enregistrer
+                                </button>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

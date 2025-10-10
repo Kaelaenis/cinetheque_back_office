@@ -25,6 +25,13 @@ namespace backOfficeMvc.Controllers
         [Route("Commande/List")]
         public ActionResult List()
         {
+            var isAdmin = TestAdminSession();
+
+            if (!isAdmin)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             List<Commande> commandes = _commandeDao.GetAllCommandes();
 
             var vm = new CommandeListViewModel
@@ -75,6 +82,8 @@ namespace backOfficeMvc.Controllers
         [Route("Commande/{id}/Edit")]
         public ActionResult Edit(int id)
         {
+            ViewBag.Articles = _articleDao.GetAllArticles();
+            ViewBag.Clients = _userDao.GetAllUsers();
             Commande commande = _commandeDao.GetCommande(id);
             if (commande == null)
             {
@@ -117,6 +126,13 @@ namespace backOfficeMvc.Controllers
 
             _commandeDao.RemoveCommande(id);
             return RedirectToAction("List");
+        }
+
+        private bool TestAdminSession()
+        {
+            var adminId = Session["AdminId"];
+            var adminLogin = Session["AdminLogin"];
+            return adminId != null && adminLogin != null;
         }
     }
 }

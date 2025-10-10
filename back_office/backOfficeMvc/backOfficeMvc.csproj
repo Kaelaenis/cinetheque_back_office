@@ -138,31 +138,31 @@
     <Compile Include="Controllers\CommandeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="DataAccess\ArticleDao.cs" />
-    <Compile Include="DataAccess\CommandeDao.cs" />
-    <Compile Include="DataAccess\IAdminDao.cs" />
-    <Compile Include="DataAccess\IArticleDao.cs" />
-    <Compile Include="DataAccess\ICommandeDao.cs" />
-    <Compile Include="DataAccess\IUserDao.cs" />
-    <Compile Include="DataAccess\UserDao.cs" />
+    <Compile Include="DataAccess\Article\ArticleDao.cs" />
+    <Compile Include="DataAccess\Commande\CommandeDao.cs" />
+    <Compile Include="DataAccess\Admin\IAdminDao.cs" />
+    <Compile Include="DataAccess\Article\IArticleDao.cs" />
+    <Compile Include="DataAccess\Commande\ICommandeDao.cs" />
+    <Compile Include="DataAccess\User\IUserDao.cs" />
+    <Compile Include="DataAccess\User\UserDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
-    <Compile Include="DataAccess\AdminDao.cs" />
+    <Compile Include="DataAccess\Admin\AdminDao.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Commande.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\ViewModels\ArticleListViewModel.cs" />
-    <Compile Include="Models\ViewModels\ArticleViewModel.cs" />
-    <Compile Include="Models\ViewModels\ChartArticleViewModel.cs" />
-    <Compile Include="Models\ViewModels\ChartCategoryViewModel.cs" />
-    <Compile Include="Models\ViewModels\ChartViewModel.cs" />
-    <Compile Include="Models\ViewModels\CommandeListViewModel.cs" />
-    <Compile Include="Models\ViewModels\CommandeViewModel.cs" />
-    <Compile Include="Models\ViewModels\UserListViewModel.cs" />
-    <Compile Include="Models\ViewModels\UserViewModel.cs" />
+    <Compile Include="Models\ViewModels\Article\ArticleListViewModel.cs" />
+    <Compile Include="Models\ViewModels\Article\ArticleViewModel.cs" />
+    <Compile Include="Models\ViewModels\Chart\ChartArticleViewModel.cs" />
+    <Compile Include="Models\ViewModels\Chart\ChartCategoryViewModel.cs" />
+    <Compile Include="Models\ViewModels\Chart\ChartViewModel.cs" />
+    <Compile Include="Models\ViewModels\Commande\CommandeListViewModel.cs" />
+    <Compile Include="Models\ViewModels\Commande\CommandeViewModel.cs" />
+    <Compile Include="Models\ViewModels\User\UserListViewModel.cs" />
+    <Compile Include="Models\ViewModels\User\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

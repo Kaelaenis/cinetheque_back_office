@@ -4,8 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    <title>Cinéthèque</title>
     @Styles.Render("~/Content/css")
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <header class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -33,6 +34,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">Dashboard</a>
                     </li>
+                    @if (Session["AdminId"] != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "Admin")">Déconnexion</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Admin")">Connexion</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -45,7 +58,7 @@
 
     <!-- 🔹 FOOTER GLOBAL -->
     <footer class="text-center py-3 border-top">
-        <p class="mb-0 text-muted">© @DateTime.Now.Year - MonSite MVC</p>
+        <p class="mb-0 text-muted">© @DateTime.Now.Year - Cinéthèque - All rights reserved</p>
     </footer>
 
     @Scripts.Render("~/bundles/modernizr")

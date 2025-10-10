@@ -21,6 +21,13 @@ namespace backOfficeMvc.Controllers
         [Route("User/List")]
         public ActionResult List()
         {
+            var isAdmin = TestAdminSession();
+
+            if (!isAdmin)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             var users = _userDao.GetAllUsers();
 
             var vm = new UserListViewModel
@@ -109,6 +116,13 @@ namespace backOfficeMvc.Controllers
             }
             _userDao.RemoveUser(id);
             return RedirectToAction("List");
+        }
+
+        private bool TestAdminSession()
+        {
+            var adminId = Session["AdminId"];
+            var adminLogin = Session["AdminLogin"];
+            return adminId != null && adminLogin != null;
         }
     }
 }
