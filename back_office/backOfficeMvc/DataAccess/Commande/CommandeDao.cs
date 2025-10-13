@@ -23,15 +23,41 @@ namespace backOfficeMvc.DataAccess
             sqlCommand.Parameters.AddWithValue("@article_id", commande.Article_id);
             sqlCommand.Parameters.AddWithValue("@utilisateur_id", commande.Client_id);
 
+            SqlCommand sqlCommandBis = new SqlCommand("UPDATE articles SET qte_dispo = qte_dispo - @qte_articles WHERE id = @article_id", sqlConnection);
+            sqlCommandBis.Parameters.AddWithValue("@qte_articles", commande.Qte_articles);
+            sqlCommandBis.Parameters.AddWithValue("@article_id", commande.Article_id);
+
             sqlConnection.Open();
             sqlCommand.ExecuteNonQuery();
+            sqlCommandBis.ExecuteNonQuery();
             sqlConnection.Close();
         }
         public void UpdateCommande(int commandeId, Commande commande)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
             SqlConnection sqlConnection = new SqlConnection(connStr);
-            SqlCommand sqlCommand = new SqlCommand("UPDATE locations SET prix_total = @prix_total, qte_articles = @qte_articles, date_debut = @date_debut, date_fin = @date_fin, article_id = @article_id, utilisateur_id = @utilisateur_id WHERE id = @id", sqlConnection);
+
+            SqlCommand cmd = new SqlCommand("SELECT qte_articles FROM locations WHERE id = @id", sqlConnection);
+            cmd.Parameters.AddWithValue("@id", commandeId);
+
+            sqlConnection.Open();
+            object result = cmd.ExecuteScalar();
+            int oldQteArticles = 0;
+
+            if (result != null && result != DBNull.Value)
+                oldQteArticles = Convert.ToInt32(result);
+            sqlConnection.Close();
+
+            SqlCommand sqlCommand = new SqlCommand(
+                "UPDATE locations " +
+                "SET prix_total = @prix_total, " +
+                "    qte_articles = @qte_articles, " +
+                "    date_debut = @date_debut, " +
+                "    date_fin = @date_fin, " +
+                "    article_id = @article_id, " +
+                "    utilisateur_id = @utilisateur_id " +
+                "WHERE id = @id", sqlConnection);
+
             sqlCommand.Parameters.AddWithValue("@prix_total", commande.Prix_total);
             sqlCommand.Parameters.AddWithValue("@qte_articles", commande.Qte_articles);
             sqlCommand.Parameters.AddWithValue("@date_debut", commande.DateDebut);
@@ -40,18 +66,45 @@ namespace backOfficeMvc.DataAccess
             sqlCommand.Parameters.AddWithValue("@utilisateur_id", commande.Client_id);
             sqlCommand.Parameters.AddWithValue("@id", commandeId);
 
+            SqlCommand sqlCommandBis = new SqlCommand(
+                "UPDATE articles " +
+                "SET qte_dispo = qte_dispo + @oldQteArticles - @qte_articles " +
+                "WHERE id = @article_id", sqlConnection);
+
+            sqlCommandBis.Parameters.AddWithValue("@qte_articles", commande.Qte_articles);
+            sqlCommandBis.Parameters.AddWithValue("@article_id", commande.Article_id);
+            sqlCommandBis.Parameters.AddWithValue("@oldQteArticles", oldQteArticles);
+
             sqlConnection.Open();
             sqlCommand.ExecuteNonQuery();
+            sqlCommandBis.ExecuteNonQuery();
             sqlConnection.Close();
         }
         public void RemoveCommande(int commandeId)
         {
             string connStr = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
             SqlConnection sqlConnection = new SqlConnection(connStr);
+
+            SqlCommand cmd = new SqlCommand("SELECT qte_articles FROM locations WHERE id = @id", sqlConnection);
+            cmd.Parameters.AddWithValue("@id", commandeId);
+
+            sqlConnection.Open();
+            object result = cmd.ExecuteScalar();
+            int oldQteArticles = 0;
+
+            if (result != null && result != DBNull.Value)
+                oldQteArticles = Convert.ToInt32(result);
+            sqlConnection.Close();
+
             SqlCommand sqlCommand = new SqlCommand("DELETE FROM locations WHERE id = @id", sqlConnection);
             sqlCommand.Parameters.AddWithValue("@id", commandeId);
 
+            SqlCommand sqlCommandBis = new SqlCommand("UPDATE articles SET qte_dispo = qte_dispo + @oldQteArticles WHERE id = (SELECT article_id FROM locations WHERE id = @id)", sqlConnection);
+            sqlCommandBis.Parameters.AddWithValue("@id", commandeId);
+            sqlCommandBis.Parameters.AddWithValue("@oldQteArticles", oldQteArticles);
+
             sqlConnection.Open();
+            sqlCommandBis.ExecuteNonQuery();
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
         }
